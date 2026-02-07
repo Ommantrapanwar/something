@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Om ❤️ Valentine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #1b0033, #000);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    color: rgba(255, 0, 120, 0.7);
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* Fireworks */
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: cyan;
+    border-radius: 50%;
+    animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(22); opacity: 0; }
+}
+
+.container {
+    text-align: center;
+    background: rgba(255,255,255,0.08);
+    padding: 50px;
+    border-radius: 35px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 40px rgba(255, 0, 150, 0.6);
+    z-index: 10;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    color: #ff4fd8;
+    text-shadow: 0 0 20px #ff4fd8;
+}
+
+p {
+    font-size: 1.3rem;
+    margin: 20px 0;
+}
+
+button {
+    padding: 15px 45px;
+    font-size: 1.1rem;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+#yes {
+    background: #00ffe5;
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 0 20px #00ffe5;
+}
+
+#yes:hover {
+    transform: scale(1.2);
+}
+
+#no {
+    background: #ff006a;
+    color: white;
+    position: absolute;
+}
+
+.result {
+    display: none;
+    text-align: center;
+}
+
+.result h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.8rem;
+    color: #00ffe5;
+    text-shadow: 0 0 20px #00ffe5;
+}
+
+.type {
+    font-size: 1.6rem;
+    margin-top: 15px;
+    color: #fff;
+}
+
+.date {
+    font-size: 1.3rem;
+    margin-top: 10px;
+    color: #ff4fd8;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+// Floating hearts
+for (let i = 0; i < 40; i++) {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+    heart.style.fontSize = (18 + Math.random() * 22) + "px";
+    document.body.appendChild(heart);
+}
+</script>
+
+<div class="container" id="question">
+    <h1>Will You Be My Valentine? 💘</h1>
+    <p>
+        Tum meri zindagi ka woh hissa ho  
+        jiske bina sab adhoora lagta hai 🌙
+    </p>
+
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 💔</button>
+</div>
+
+<div class="result" id="result">
+    <h2>Good choice BABU !!! 😍❤️</h2>
+    <p class="type" id="typing"></p>
+    <p class="date" id="dateText"></p>
+    <p>💍 Forever & Always 💍</p>
+</div>
+
+<!-- 🎵 Put your Bollywood song file as song.mp3 in same folder -->
+<audio id="song" loop>
+    <source src="tera_ban_jaunga.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const question = document.getElementById("question");
+const result = document.getElementById("result");
+const song = document.getElementById("song");
+const typing = document.getElementById("typing");
+const dateText = document.getElementById("dateText");
+
+/* ✏️ CHANGE NAME HERE */
+const fullText = "Om ❤️ Akansha ";
+
+/* No button runs */
+noBtn.addEventListener("mouseover", () => {
+    noBtn.style.left = Math.random() * (window.innerWidth - 140) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 70) + "px";
+});
+
+/* YES click */
+yesBtn.addEventListener("click", () => {
+    question.style.display = "none";
+    result.style.display = "block";
+    song.play();
+    typeEffect();
+    showDate();
+    startFireworks();
+});
+
+/* Typing effect */
+let i = 0;
+function typeEffect() {
+    if (i < fullText.length) {
+        typing.innerHTML += fullText.charAt(i);
+        i++;
+        setTimeout(typeEffect, 120);
+    }
+}
+
+/* Proposal date */
+function showDate() {
+    const today = new Date().toDateString();
+    dateText.innerHTML = "💞 Proposal Date: " + today;
+}
+
+/* Continuous fireworks */
+function startFireworks() {
+    setInterval(() => {
+        let fw = document.createElement("div");
+        fw.className = "firework";
+        fw.style.left = Math.random() * 100 + "vw";
+        fw.style.top = Math.random() * 100 + "vh";
+        fw.style.background = ["#00ffe5","#ff4fd8","#fff","#ff006a"]
+            [Math.floor(Math.random()*4)];
+        document.body.appendChild(fw);
+        setTimeout(() => fw.remove(), 1200);
+    }, 300);
+}
+</script>
+
+</body>
+</html>
